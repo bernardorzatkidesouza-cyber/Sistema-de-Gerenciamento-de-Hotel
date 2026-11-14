@@ -16,10 +16,10 @@ from erros import RegraDeNegocioError
 # Use 127.0.0.1 e não "localhost": no Windows, "localhost" pode tentar IPv6 antes
 # e deixar a chamada lenta. TROQUE as chaves pelos nomes reais dos seus serviços.
 URLS = {
-    "SERVICO1": os.environ.get("SERVICO1_URL", "http://127.0.0.1:5001"),
-    "SERVICO2": os.environ.get("SERVICO2_URL", "http://127.0.0.1:5002"),
-    "SERVICO3": os.environ.get("SERVICO3_URL", "http://127.0.0.1:5003"),
-    "SERVICO4": os.environ.get("SERVICO4_URL", "http://127.0.0.1:5004"),
+    "servicohospede": os.environ.get("hospedes1", "https://sistema-de-gerenciamento-de-hotel-hospedes1.onrender.com"),
+    "servicoquartos": os.environ.get("quartos2", "https://sistema-de-gerenciamento-de-hotel-quartos2.onrender.com"),
+    "servicoreservas": os.environ.get("reservas3", "https://sistema-de-gerenciamento-de-hotel-reservas3.onrender.com"),
+    "servicopagamentos": os.environ.get("pagamentos4", "https://sistema-de-gerenciamento-de-hotel-pagamentos4.onrender.com"),
 }
 TIMEOUT = 5  # segundos: não esperar para sempre por um serviço lento
 EU = "SERVICO2"
