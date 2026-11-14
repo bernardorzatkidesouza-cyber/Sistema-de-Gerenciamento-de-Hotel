@@ -84,3 +84,16 @@ Cada microsserviço contém `app.py`, `models.py`, `regras.py`, `rotas.py`, `int
 - O campo `valor` foi incluído em pagamentos porque é necessário registrar quanto foi pago e comparar com o total da reserva.
 - A disponibilidade do quarto representa a situação administrativa (`disponivel` ou `indisponivel`). A verificação de choque entre datas de reservas é feita pelo próprio microsserviço de reservas, que possui o histórico de reservas.
 - Em produção, o plano gratuito do Render pode apagar arquivos SQLite em reinicializações. Os dados de exemplo de hóspedes e quartos são recriados na inicialização.
+
+
+
+
+python -m venv .venv
+.venv\Scripts\activate          (Windows)
+pip install flask flask-sqlalchemy requests
+
+rest client
+https://dashboard.render.com/project/prj-dbrp3kbbc2fs73cppg90/environment/evm-dbrp3kbbc2fs73cppg9g render ligar servidores
+
+fazer arquivos .db
+
