@@ -1,0 +1,37 @@
+@baseUrl = http://127.0.0.1:5002
+
+### Saúde
+GET {{baseUrl}}/api/health
+
+### Criar quarto
+POST {{baseUrl}}/api/quartos
+Content-Type: application/json
+
+{
+  "numero": 301,
+  "tipo": "suite",
+  "capacidade": 2,
+  "valor_diaria": 280.0,
+  "status": "disponivel"
+}
+
+### Listar quartos
+GET {{baseUrl}}/api/quartos
+
+### Buscar quarto por ID
+GET {{baseUrl}}/api/quartos/1
+
+### Consultar disponibilidade (usada pelo serviço de reservas)
+GET {{baseUrl}}/api/quartos/1/disponibilidade
+
+### Atualizar quarto
+PUT {{baseUrl}}/api/quartos/1
+Content-Type: application/json
+
+{
+  "valor_diaria": 300.0,
+  "status": "disponivel"
+}
+
+### Excluir quarto
+DELETE {{baseUrl}}/api/quartos/1

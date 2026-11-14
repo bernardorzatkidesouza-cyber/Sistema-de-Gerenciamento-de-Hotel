@@ -1,0 +1,23 @@
+@baseUrl = http://127.0.0.1:5004
+
+### Saúde
+GET {{baseUrl}}/api/health
+
+### Registrar pagamento (requer o serviço de reservas ligado e reserva existente)
+POST {{baseUrl}}/api/pagamentos
+Content-Type: application/json
+
+{
+  "id_reserva": 1,
+  "valor": 450.0,
+  "forma_pagamento": "pix"
+}
+
+### Listar pagamentos
+GET {{baseUrl}}/api/pagamentos
+
+### Buscar pagamento por ID
+GET {{baseUrl}}/api/pagamentos/1
+
+### Excluir pagamento
+DELETE {{baseUrl}}/api/pagamentos/1

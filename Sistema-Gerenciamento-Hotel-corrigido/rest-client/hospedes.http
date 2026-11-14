@@ -1,0 +1,33 @@
+@baseUrl = http://127.0.0.1:5001
+
+### Saúde
+GET {{baseUrl}}/api/health
+
+### Criar hóspede
+POST {{baseUrl}}/api/hospedes
+Content-Type: application/json
+
+{
+  "nome": "Maria Oliveira",
+  "cpf": "11122233344",
+  "telefone": "48988887777",
+  "email": "maria@exemplo.com",
+  "endereco": "Rua das Flores, 50"
+}
+
+### Listar hóspedes
+GET {{baseUrl}}/api/hospedes
+
+### Buscar hóspede por ID (ajuste o ID se necessário)
+GET {{baseUrl}}/api/hospedes/1
+
+### Atualizar hóspede
+PUT {{baseUrl}}/api/hospedes/1
+Content-Type: application/json
+
+{
+  "telefone": "48977776666"
+}
+
+### Excluir hóspede
+DELETE {{baseUrl}}/api/hospedes/1

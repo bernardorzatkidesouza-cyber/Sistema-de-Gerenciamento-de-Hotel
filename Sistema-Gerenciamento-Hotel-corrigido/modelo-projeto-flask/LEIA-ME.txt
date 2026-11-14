@@ -1,0 +1,39 @@
+MODELO DE PROJETO - MICROSSERVICOS COM FLASK
+============================================
+
+O QUE JA VEM PRONTO
+- 4 servicos (servico_1 a servico_4), cada um com sua pasta, porta (5001-5004) e banco proprio.
+- Cada servico ja tem CRUD completo (criar, listar, buscar, atualizar, inativar)
+  e a rota "esta ativo?" para os outros servicos perguntarem.
+- Cada servico ja tem o arquivo integracao.py (o "telefone" para chamar os outros).
+- Cada servico tem o seu requirements.txt (o Render so enxerga a pasta do servico).
+- Cada servico cria 1 registro de exemplo ao iniciar se o banco estiver vazio
+  (no Render o banco e apagado quando o servico hiberna).
+- VS Code: botao "Iniciar os 4 servicos" (.vscode/launch.json).
+- Thunder Client: thunder-client-colecao.json com testes de todos os servicos.
+- README.md modelo para o documento de requisitos.
+
+O QUE A EQUIPE PRECISA FAZER (nao esta pronto!)
+1. Escolher o dominio e trocar os nomes: pasta, NOME no app.py, classe Registro,
+   campos, rotas (/api/registros) e a chave em integracao.py.
+2. Criar as 3 integracoes (2 buscas + 1 alteracao) usando integracao.chamar().
+   Ha um exemplo comentado no fim de regras.py.
+3. Tratar falha: se o outro servico cair, o que acontece? E se a alteracao falhar?
+4. Escrever o README.md e testar tudo pelo Thunder Client.
+
+PRIMEIROS PASSOS (WINDOWS / POWERSHELL)
+  cd modelo-projeto-flask
+  py -m venv .venv
+  .venv\Scripts\Activate.ps1      (se der erro de politica de execucao, rode:
+                                    Set-ExecutionPolicy -Scope Process Bypass)
+  pip install -r requirements.txt
+No VS Code: selecione o interpretador da .venv (Ctrl+Shift+P > Python: Select Interpreter),
+abra Executar e Depurar e escolha "Iniciar os 4 servicos".
+Se o Windows perguntar sobre o Firewall, clique em Permitir.
+Alternativa sem VS Code: de dois cliques em iniciar_servicos.bat.
+
+DICAS
+- Use 127.0.0.1 e nao localhost.
+- Um servico nunca abre o banco do outro: so pergunta por HTTP.
+- Se mudar nomes de campos e o banco antigo der erro, apague o arquivo .db do servico
+  (pasta instance/) e inicie de novo.

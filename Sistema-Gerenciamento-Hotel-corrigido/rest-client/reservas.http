@@ -1,0 +1,40 @@
+@baseUrl = http://127.0.0.1:5003
+
+### Saúde
+GET {{baseUrl}}/api/health
+
+### Criar reserva (requer os serviços de hóspedes e quartos ligados)
+POST {{baseUrl}}/api/reservas
+Content-Type: application/json
+
+{
+  "hospede_id": 1,
+  "quarto_id": 1,
+  "data_entrada": "2026-12-01",
+  "data_saida": "2026-12-04"
+}
+
+### Listar reservas
+GET {{baseUrl}}/api/reservas
+
+### Buscar reserva por ID
+GET {{baseUrl}}/api/reservas/1
+
+### Confirmar manualmente uma reserva (normalmente feito pelo serviço de pagamentos)
+PUT {{baseUrl}}/api/reservas/1/status
+Content-Type: application/json
+
+{
+  "status": "confirmada"
+}
+
+### Cancelar reserva
+PUT {{baseUrl}}/api/reservas/1/status
+Content-Type: application/json
+
+{
+  "status": "cancelada"
+}
+
+### Excluir reserva
+DELETE {{baseUrl}}/api/reservas/1
