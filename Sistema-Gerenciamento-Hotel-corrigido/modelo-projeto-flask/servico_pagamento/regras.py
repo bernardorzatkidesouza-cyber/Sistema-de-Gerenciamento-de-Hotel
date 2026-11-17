@@ -15,6 +15,8 @@ def criar(dados):
         raise RegraDeNegocioError("O valor do pagamento deve ser maior que zero.")
     if forma not in ("pix", "cartao", "dinheiro"):
         raise RegraDeNegocioError("Forma de pagamento inválida. Use pix, cartao ou dinheiro.")
+    if Pagamento.query.filter_by(id_reserva=reserva_id, status="aprovado").first():
+        raise RegraDeNegocioError("Já existe um pagamento aprovado para esta reserva.", 409)
 
     # Registra o pagamento aprovado e solicita ao serviço de reservas a confirmação.
     # O próprio PUT responde 404 se a reserva não existir. Assim, esta é a única
@@ -29,8 +31,19 @@ def criar(dados):
     try:
         resposta_update = integracao.chamar(
             "reservas", "PUT", f"/api/reservas/{reserva_id}/status",
-            json={"status": "confirmada"},
+            json={"status": "confirmada", "valor_pago": valor},
         )
+        if resposta_update.status_code in (400, 404, 409):
+            # A reserva recusou a confirmação (não existe, já confirmada, cancelada
+            # ou valor diferente do total): repassa a mensagem do serviço de reservas.
+            try:
+                mensagem = resposta_update.json().get("erro")
+            except ValueError:
+                mensagem = None
+            raise RegraDeNegocioError(
+                (mensagem or "A reserva não pôde ser confirmada.") + " O pagamento foi desfeito.",
+                resposta_update.status_code,
+            )
         if resposta_update.status_code != 200:
             raise ErroIntegracao(
                 f"O serviço de reservas não confirmou a atualização (HTTP {resposta_update.status_code}).",

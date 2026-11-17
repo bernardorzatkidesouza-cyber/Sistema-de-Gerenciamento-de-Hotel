@@ -40,9 +40,11 @@ def atualizar(hospede_id, dados):
             valor = (dados.get(campo) or "").strip()
             if not valor:
                 raise RegraDeNegocioError(f"O campo '{campo}' não pode ficar vazio.")
-            outro = Hospede.query.filter(getattr(Hospede, campo) == valor, Hospede.id != hospede_id).first()
-            if outro:
-                raise RegraDeNegocioError(f"O campo '{campo}' já está cadastrado.")
+            # Apenas CPF e e-mail são únicos; nome, telefone e endereço podem se repetir.
+            if campo in ("cpf", "email"):
+                outro = Hospede.query.filter(getattr(Hospede, campo) == valor, Hospede.id != hospede_id).first()
+                if outro:
+                    raise RegraDeNegocioError(f"O campo '{campo}' já está cadastrado.")
             setattr(hospede, campo, valor)
     db.session.commit()
     return hospede

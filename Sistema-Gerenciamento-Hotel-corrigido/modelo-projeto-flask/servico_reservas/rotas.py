@@ -24,7 +24,7 @@ def buscar(reserva_id):
 @rotas.put("/<int:reserva_id>/status")
 def atualizar_status(reserva_id):
     dados = request.get_json(silent=True) or {}
-    reserva = regras.atualizar_status(reserva_id, dados.get("status"))
+    reserva = regras.atualizar_status(reserva_id, dados.get("status"), dados.get("valor_pago"))
     return (jsonify(reserva.para_dict()), 200) if reserva else (jsonify(erro="Reserva não encontrada."), 404)
 
 
