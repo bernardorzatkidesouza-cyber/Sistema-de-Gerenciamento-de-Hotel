@@ -84,7 +84,7 @@ def buscar(reserva_id):
     return db.session.get(Reserva, reserva_id)
 
 
-def atualizar_status(reserva_id, status):
+def atualizar_status(reserva_id, status, valor_pago=None):
     reserva = buscar(reserva_id)
     if reserva is None:
         return None
@@ -92,6 +92,20 @@ def atualizar_status(reserva_id, status):
         raise RegraDeNegocioError("Status inválido. Use pendente, confirmada ou cancelada.")
     if reserva.status == "cancelada" and status != "cancelada":
         raise RegraDeNegocioError("Uma reserva cancelada não pode ser reativada.")
+    if status == "confirmada" and reserva.status == "confirmada":
+        raise RegraDeNegocioError("A reserva já está confirmada.", 409)
+    # Quando a confirmação vem do serviço de pagamentos, o valor pago
+    # precisa ser igual ao valor total da reserva.
+    if valor_pago is not None:
+        try:
+            valor_pago = float(valor_pago)
+        except (TypeError, ValueError):
+            raise RegraDeNegocioError("O valor pago informado é inválido.")
+        if abs(valor_pago - reserva.valor_total) > 0.009:
+            raise RegraDeNegocioError(
+                f"O valor pago (R$ {valor_pago:.2f}) é diferente do valor total da reserva "
+                f"(R$ {reserva.valor_total:.2f})."
+            )
     reserva.status = status
     db.session.commit()
     return reserva

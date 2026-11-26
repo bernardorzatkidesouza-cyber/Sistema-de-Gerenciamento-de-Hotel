@@ -3,7 +3,18 @@
 ### Saúde
 GET {{baseUrl}}/api/health
 
+### Pagamento com valor diferente do total (deve ser recusado e desfeito)
+POST {{baseUrl}}/api/pagamentos
+Content-Type: application/json
+
+{
+  "id_reserva": 1,
+  "valor": 100.0,
+  "forma_pagamento": "pix"
+}
+
 ### Registrar pagamento (requer o serviço de reservas ligado e reserva existente)
+# Enviar duas vezes mostra o bloqueio de pagamento duplicado (HTTP 409)
 POST {{baseUrl}}/api/pagamentos
 Content-Type: application/json
 
